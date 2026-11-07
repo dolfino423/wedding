@@ -71,7 +71,7 @@ h2{margin:0;font-weight:300;font-size:15px;letter-spacing:4px;text-indent:4px}
 .cover-frame{position:relative;margin-bottom:30px}
 .cover-panel{position:absolute;inset:0;background:var(--ink);transform:translate(10px,10px)}
 .cover-photo{position:relative;container-type:inline-size;aspect-ratio:5/7;overflow:hidden;background:#d9d2c8}
-.cover-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:var(--photo-filter,none)} /* 흑백으로 하려면 .cover-text 옆에 .cover-photo{--photo-filter:grayscale(1)} 추가 */
+.cover-photo > img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:var(--photo-filter,none)} /* 흑백으로 하려면 .cover-text 옆에 .cover-photo{--photo-filter:grayscale(1)} 추가 */
 .cover-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 8px;font-size:13.5px;line-height:1.6}
 .cover-meta .label{display:block;margin-bottom:4px}
 .cover-names{margin-top:28px;padding:0 8px;text-align:center;font-size:13px;letter-spacing:2px;font-weight:400;color:var(--text-soft)}
@@ -80,23 +80,17 @@ h2{margin:0;font-weight:300;font-size:15px;letter-spacing:4px;text-indent:4px}
 /* ---------- 표지 글씨 (직접 수정하는 곳) ---------- */
 .cover-text{
   --ct-color:#ffffff;          /* 글씨 색 */
-  --ct-script-size:23cqw;      /* "Wedding" 크기: 사진 폭의 % (23cqw = 사진 폭의 23%). 숫자만 바꾸면 됩니다 */
-  --ct-script-top:52%;         /* "Wedding" 세로 위치 (사진 높이 기준, 가운데 정렬) */
-  --ct-script-shift:0px;       /* "Wedding" 좌우 이동 (+ 오른쪽, - 왼쪽) */
+  --ct-script-width:100%;       /* "Wedding" 글씨 폭: 사진 폭 기준 % */
+  --ct-script-top:56%;         /* "Wedding" 세로 위치 (글씨 세로 중심 기준) */
+  --ct-script-left:0%;        /* "Wedding" 왼쪽 시작점 (레퍼런스처럼 살짝 왼쪽으로 삐져나감) */
   --ct-top-size:9px;           /* 위쪽 작은 라벨 크기 */
-  --ct-thanks-size:12cqw;      /* "Thanks!" 크기: 사진 폭의 % */
-  --ct-thanks-top:78%;         /* "Thanks!" 세로 위치 */
-  --ct-quote-size:9px;         /* 인용문 크기 */
-  --ct-quote-top:86%;          /* 인용문 세로 위치 */
   --ct-names-size:11px;        /* 아래 이름 크기 */
   --ct-names-bottom:4%;        /* 아래 이름: 바닥에서 띄우는 거리 */
   --ct-shadow:0 1px 10px rgba(0,0,0,.35); /* 글씨 그림자 (없애려면 none) */
   position:absolute;inset:0;color:var(--ct-color);pointer-events:none;text-shadow:var(--ct-shadow)
 }
 .ct-top{position:absolute;top:4.5%;left:6%;right:6%;display:flex;justify-content:space-between;font-family:'Montserrat',sans-serif;font-weight:400;font-size:var(--ct-top-size);letter-spacing:1px;white-space:nowrap}
-.ct-script{position:absolute;top:var(--ct-script-top);left:0;right:0;text-align:center;font-family:'Alex Brush',cursive;font-weight:400;font-size:var(--ct-script-size);line-height:1;transform:translate(var(--ct-script-shift),-50%)}
-.ct-thanks{position:absolute;top:var(--ct-thanks-top);left:0;right:0;text-align:center;font-family:'Alex Brush',cursive;font-size:var(--ct-thanks-size);line-height:1}
-.ct-quote{position:absolute;top:var(--ct-quote-top);left:6%;right:6%;text-align:center;font-family:var(--en);font-weight:400;font-size:var(--ct-quote-size);line-height:1.55}
+.ct-script{position:absolute;top:var(--ct-script-top);left:var(--ct-script-left);width:var(--ct-script-width);height:auto;max-width:none;transform:translateY(-50%);filter:drop-shadow(0 1px 6px rgba(0,0,0,.35))}
 .ct-names{position:absolute;bottom:var(--ct-names-bottom);left:0;right:0;text-align:center;font-family:'Montserrat',sans-serif;font-weight:400;font-size:var(--ct-names-size);letter-spacing:2.5px}
 .ct-names span{margin:0 4px}
 
@@ -227,9 +221,8 @@ details[open] summary svg{transform:rotate(180deg)}
              · 색·크기·위치: <style> 안의 "표지 글씨" 항목(--ct-… 값)을 고치면 됩니다. -->
         <div class="cover-text" aria-hidden="true">
           <div class="ct-top"><span>OUR LOVE STORY</span><span>YOU AND ME</span><span>OUR LOVE STORY</span></div>
-          <div class="ct-script">Wedding</div>
-          <div class="ct-thanks">Thanks!</div>
-          <div class="ct-quote">"Wishing you both endless love and joy as you begin<br>this beautiful journey together."</div>
+          <!-- 레퍼런스에서 그대로 따온 "Wedding" 글씨 (흰색 PNG). 크기/위치는 --ct-script-width, --ct-script-top -->
+          <img class="ct-script" src="assets/img/wedding-script.png" alt="">
           <div class="ct-names">KANGSEOK <span>-</span> JIEUN</div>
         </div>
       </div>

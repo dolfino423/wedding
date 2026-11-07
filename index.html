@@ -541,7 +541,11 @@ details[open] summary svg{transform:rotate(180deg)}
         }, function(){ /* 아직 상호작용 전: 다음 터치에서 다시 시도 */ });
       }
     }
-    function stop(){ fadeTo(0, function(){ audio.pause(); }); setState(false); }
+    function stop(){
+      clearInterval(fadeTimer);
+      // 끄기는 즉시 멈춥니다 (페이드아웃 중 다른 이벤트가 끼어들어 다시 켜지는 것 방지)
+      audio.pause(); started = false; setState(false);
+    }
 
     // 음원 파일을 못 찾으면(마지막 source까지 실패) 버튼을 숨깁니다.
     var sources = audio.querySelectorAll('source');
@@ -549,10 +553,15 @@ details[open] summary svg{transform:rotate(180deg)}
     audio.addEventListener('error', function(){ btn.hidden = true; });
     audio.volume = isIOS ? 1 : 0;
 
+    // 일부 웹뷰(카카오톡 등)는 한 번 탭에 click이 두 번 들어와 켜짐→꺼짐이 상쇄됩니다. 400ms 안의 중복은 무시합니다.
+    var lastToggle = 0;
     btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      if (audio.paused) { userOff = false; play(); }
-      else { userOff = true; stop(); }
+      e.stopPropagation(); e.preventDefault();
+      var now = Date.now();
+      if (now - lastToggle < 400) return;
+      lastToggle = now;
+      if (btn.getAttribute('data-state') === 'on') { userOff = true; stop(); }
+      else { userOff = false; play(); }
     });
 
     // 브라우저가 '사용자 동작'으로 인정하는 이벤트에서만 재생이 허용됩니다 (touchend, click, pointerdown, keydown).

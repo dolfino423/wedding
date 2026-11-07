@@ -397,7 +397,7 @@ details[open] summary svg{transform:rotate(180deg)}
   <source src="assets/audio/bgm.mp3" type="audio/mpeg">
   <source src="assets/audio/bgm.mp4" type="audio/mp4">
 </audio>
-<button class="bgm-btn" id="bgm-btn" type="button" data-state="off" aria-label="배경음악 켜기" aria-pressed="false" hidden>
+<button class="bgm-btn" id="bgm-btn" type="button" data-state="off" aria-label="배경음악 켜기" aria-pressed="false">
   <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M4 10v4h3l4 3V7l-4 3H4z" fill="currentColor" stroke="none"/>
     <path class="wave" d="M15 9.5a3.5 3.5 0 0 1 0 5"/>
@@ -513,7 +513,8 @@ details[open] summary svg{transform:rotate(180deg)}
   (function(){
     var audio = document.getElementById('bgm'), btn = document.getElementById('bgm-btn');
     if (!audio || !btn) return;
-    var TARGET = 0.35, fadeTimer = null, userOff = false, started = false;
+    var TARGET = 0.35, fadeTimer = null, userOff = false, started = false, hinted = false;
+    var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     function setState(on){
       btn.setAttribute('data-state', on ? 'on' : 'off');
@@ -531,13 +532,18 @@ details[open] summary svg{transform:rotate(180deg)}
     function play(){
       var p = audio.play();
       if (p && p.then) {
-        p.then(function(){ started = true; setState(true); fadeTo(TARGET); }, function(){ /* 아직 상호작용 전: 다음 터치에서 다시 시도 */ });
+        p.then(function(){
+          started = true; setState(true); fadeTo(TARGET);
+          // iPhone은 무음 스위치가 켜져 있으면 웹 소리가 나지 않습니다. 한 번만 안내합니다.
+          if (isIOS && !hinted) { hinted = true; showToast('소리가 안 들리면 무음 모드를 해제해 주세요'); }
+        }, function(){ /* 아직 상호작용 전: 다음 터치에서 다시 시도 */ });
       }
     }
     function stop(){ fadeTo(0, function(){ audio.pause(); }); setState(false); }
 
-    // 파일이 있을 때만 버튼을 보여줍니다.
-    audio.addEventListener('canplay', function(){ btn.hidden = false; }, { once: true });
+    // 음원 파일을 못 찾으면(마지막 source까지 실패) 버튼을 숨깁니다.
+    var sources = audio.querySelectorAll('source');
+    if (sources.length) sources[sources.length - 1].addEventListener('error', function(){ btn.hidden = true; });
     audio.addEventListener('error', function(){ btn.hidden = true; });
     audio.volume = 0;
 
@@ -547,12 +553,13 @@ details[open] summary svg{transform:rotate(180deg)}
       else { userOff = true; stop(); }
     });
 
+    // 브라우저가 '사용자 동작'으로 인정하는 이벤트에서만 재생이 허용됩니다 (touchend, click, pointerdown, keydown).
     function firstTouch(){
       if (started || userOff || btn.hidden) return;
       play();
     }
-    ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function(ev){
-      window.addEventListener(ev, firstTouch, { passive: true });
+    ['touchend', 'click', 'pointerdown', 'keydown'].forEach(function(ev){
+      document.addEventListener(ev, firstTouch, { passive: true, capture: true });
     });
 
     // 다른 앱으로 갔다 돌아오면 이어서 재생

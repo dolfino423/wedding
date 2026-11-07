@@ -392,10 +392,10 @@ details[open] summary svg{transform:rotate(180deg)}
   <div class="lb-count" id="lb-count"></div>
 </div>
 
-<!-- 배경음악: assets/audio/bgm.mp3 또는 bgm.mp4 가 있을 때만 버튼이 나타납니다 -->
-<audio id="bgm" loop preload="auto">
+<!-- 배경음악: assets/audio/bgm.m4a (AAC) 우선, bgm.mp3 대체. 파일을 못 찾으면 버튼이 숨겨집니다 -->
+<audio id="bgm" loop preload="auto" playsinline webkit-playsinline>
+  <source src="assets/audio/bgm.m4a" type="audio/mp4">
   <source src="assets/audio/bgm.mp3" type="audio/mpeg">
-  <source src="assets/audio/bgm.mp4" type="audio/mp4">
 </audio>
 <button class="bgm-btn" id="bgm-btn" type="button" data-state="off" aria-label="배경음악 켜기" aria-pressed="false">
   <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -523,6 +523,8 @@ details[open] summary svg{transform:rotate(180deg)}
     }
     function fadeTo(vol, then){
       clearInterval(fadeTimer);
+      // iOS는 volume 속성을 무시하므로(항상 1) 페이드 없이 바로 처리합니다.
+      if (isIOS) { if (then) then(); return; }
       fadeTimer = setInterval(function(){
         var v = audio.volume, step = 0.03;
         if (Math.abs(v - vol) <= step) { audio.volume = vol; clearInterval(fadeTimer); if (then) then(); return; }
@@ -545,7 +547,7 @@ details[open] summary svg{transform:rotate(180deg)}
     var sources = audio.querySelectorAll('source');
     if (sources.length) sources[sources.length - 1].addEventListener('error', function(){ btn.hidden = true; });
     audio.addEventListener('error', function(){ btn.hidden = true; });
-    audio.volume = 0;
+    audio.volume = isIOS ? 1 : 0;
 
     btn.addEventListener('click', function(e){
       e.stopPropagation();

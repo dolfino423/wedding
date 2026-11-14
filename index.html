@@ -52,9 +52,6 @@ section{position:relative;padding:64px var(--pad)}
 .kicker{display:block;font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:4px;color:var(--brown);margin-bottom:10px}
 h2{margin:0;font-weight:300;font-size:15px;letter-spacing:4px;text-indent:4px}
 .label{font-weight:400;letter-spacing:3px;font-size:13px}
-.corners::before,.corners::after{content:"";position:absolute;width:44px;height:1px;background:var(--brown);transform-origin:0 0;transform:rotate(-45deg)}
-.corners::before{left:28px;top:60px}
-.corners::after{right:60px;bottom:16px}
 [hidden]{display:none!important}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;border:1px solid var(--ink);color:var(--ink);background:var(--white);font-size:13px;font-weight:400;letter-spacing:.5px;white-space:nowrap;transition:background .2s,color .2s}
 .btn:active{background:var(--ink);color:var(--white)}
@@ -240,7 +237,7 @@ details[open] summary svg{transform:rotate(180deg)}
   </section>
 
   <!-- 2. 인사말 -->
-  <section class="greeting paper corners" aria-label="인사말">
+  <section class="greeting paper" aria-label="인사말">
     <div class="greeting-text reveal">
       <p>한 편의 영화처럼 만났던</p>
       <p>저희 두 사람 결혼합니다.</p>
@@ -364,7 +361,7 @@ details[open] summary svg{transform:rotate(180deg)}
   </section>
 
   <!-- 6. 마음 전하실 곳 -->
-  <section class="accounts paper corners" aria-label="마음 전하실 곳">
+  <section class="accounts paper" aria-label="마음 전하실 곳">
     <div class="head reveal">
       <span class="kicker">WITH LOVE</span>
       <h2>마음 전하실 곳</h2>

@@ -18,8 +18,6 @@
 @font-face{font-family:'MaruBuri';font-weight:300;font-display:swap;src:url(assets/fonts/MaruBuri-Light.woff2) format('woff2')}
 @font-face{font-family:'MaruBuri';font-weight:400;font-display:swap;src:url(assets/fonts/MaruBuri-Regular.woff2) format('woff2')}
 @font-face{font-family:'MaruBuri';font-weight:600;font-display:swap;src:url(assets/fonts/MaruBuri-SemiBold.woff2) format('woff2')}
-@font-face{font-family:'NanumBarunGothic';font-weight:300;font-display:swap;src:url(assets/fonts/NanumBarunGothic-Light.woff2) format('woff2')}
-@font-face{font-family:'NanumBarunGothic';font-weight:400;font-display:swap;src:url(assets/fonts/NanumBarunGothic-Regular.woff2) format('woff2')}
 
 :root{
   --paper:#fdddb6;
@@ -34,7 +32,6 @@
   --outside:#efe6da;
   --kr:'MaruBuri', 'Noto Serif KR', serif;
   --en:'Times New Roman', Tinos, 'Noto Serif', serif;
-  --hand:'NanumBarunGothic', 'Nanum Gothic', sans-serif;
   --pad:28px;
 }
 
@@ -113,20 +110,22 @@ h2{margin:0;font-weight:300;font-size:15px;letter-spacing:4px;text-indent:4px}
 
 /* ---------- 3. date ---------- */
 .date{padding:72px var(--pad) 80px}
-.big-date{font-family:var(--hand);font-weight:700;letter-spacing:1px;color:var(--date);line-height:1;padding:0 8px}
-.big-date .d1{font-size:clamp(50px,16vw,68px);white-space:nowrap}
-.big-date .d2{font-size:clamp(28px,9vw,38px);margin-top:6px;font-weight:400;padding-left:2px}
+.big-date{font-family:var(--en);font-weight:700;color:var(--date);line-height:1;padding:0 8px}
+.big-date .d1{font-size:clamp(46px,15vw,64px);white-space:nowrap}
+.big-date .d2{font-size:clamp(28px,9vw,38px);margin-top:8px;padding-left:2px}
 .couple{display:flex;justify-content:flex-end;gap:28px;margin-top:28px;padding:0 8px;font-size:14px;font-weight:400}
 .couple small{font-size:10px;font-weight:300;margin-right:6px}
-.calendar{margin:0 auto;max-width:320px;text-align:center}
-.calendar .date-title{text-align:left;font-family:var(--hand);font-weight:400;font-size:17px;line-height:1.8;letter-spacing:3px;color:var(--text-soft);margin:0 0 26px;padding-left:4px}
-.calendar .date-title span{display:block}
+.calendar{margin:48px auto 0;max-width:320px;text-align:center}
+.calendar .month{font-family:var(--en);font-weight:700;font-size:13px;letter-spacing:3px;color:var(--brown);margin-bottom:14px}
 .calendar table{width:100%;border-collapse:collapse;font-size:13px}
-.calendar th{font-family:var(--hand);font-weight:400;font-size:12px;color:var(--brown);padding:6px 0 10px;letter-spacing:1px}
-.calendar td{padding:0;height:38px;font-family:var(--hand);font-size:13px;font-weight:300;color:var(--text-soft)}
+.calendar th{font-family:var(--en);font-weight:700;font-size:11px;color:var(--brown);padding:6px 0 10px;letter-spacing:1px}
+.calendar td{padding:0;height:40px;font-weight:300;color:var(--text-soft)}
 .calendar td span{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%}
 .calendar td.sun{color:#a8584a}
 .calendar td.today span{background:var(--ink);color:var(--white);font-weight:400}
+.dday{margin-top:36px;text-align:center;font-size:13.5px;line-height:1.9}
+.dday strong{display:block;font-family:var(--en);font-weight:700;font-size:28px;letter-spacing:2px;color:var(--date);margin-bottom:4px}
+.dday em{font-style:normal;font-weight:400}
 
 /* ---------- 4. gallery ---------- */
 .gallery{padding-left:0;padding-right:0}
@@ -252,10 +251,19 @@ details[open] summary svg{transform:rotate(180deg)}
 
   <!-- 3. 날짜 -->
   <section class="date paper-light" aria-label="예식 일시">
+    <div class="big-date reveal">
+      <div class="d1">23 January</div>
+      <div class="d2">PM 6:40</div>
+    </div>
+    <div class="couple reveal">
+      <div><small>신랑</small>송강석</div>
+      <div><small>신부</small>이지은</div>
+    </div>
+
     <div class="calendar reveal">
-      <div class="date-title"><span>일월 이십삼일</span><span>저녁 여섯시 사십분</span></div>
+      <div class="month">JANUARY 2027</div>
       <table>
-        <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
+        <thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead>
         <tbody>
           <tr><td></td><td></td><td></td><td></td><td></td><td><span>1</span></td><td><span>2</span></td></tr>
           <tr><td class="sun"><span>3</span></td><td><span>4</span></td><td><span>5</span></td><td><span>6</span></td><td><span>7</span></td><td><span>8</span></td><td><span>9</span></td></tr>
@@ -267,6 +275,10 @@ details[open] summary svg{transform:rotate(180deg)}
       </table>
     </div>
 
+    <div class="dday reveal">
+      <strong id="dday">D-</strong>
+      <span id="dday-text">강석 <em>♥</em> 지은의 결혼식까지</span>
+    </div>
   </section>
 
   <!-- 4. 갤러리 -->
@@ -458,8 +470,20 @@ details[open] summary svg{transform:rotate(180deg)}
   // 카카오 개발자 콘솔(developers.kakao.com)에서 발급한 JavaScript 키.
   // 비워두면 카카오톡 공유 버튼이 숨겨지고 '링크 복사하기'만 보입니다.
   var KAKAO_JS_KEY = '';
+  var WEDDING = new Date(2027, 0, 23, 18, 40); // 2027-01-23 18:40 (기기 로컬 시간)
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ===== D-day =====
+  (function(){
+    var now = new Date();
+    var a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var b = new Date(WEDDING.getFullYear(), WEDDING.getMonth(), WEDDING.getDate());
+    var diff = Math.round((b - a) / 86400000);
+    var el = document.getElementById('dday'), txt = document.getElementById('dday-text');
+    if (diff > 0) { el.textContent = 'D-' + diff; txt.innerHTML = '강석 <em>♥</em> 지은의 결혼식이 ' + diff + '일 남았습니다'; }
+    else if (diff === 0) { el.textContent = 'D-DAY'; txt.innerHTML = '오늘, 강석 <em>♥</em> 지은이 결혼합니다'; }
+    else { el.textContent = 'D+' + (-diff); txt.innerHTML = '강석 <em>♥</em> 지은이 결혼한 지 ' + (-diff) + '일'; }
+  })();
 
   // ===== 스크롤 등장 =====
   // 첫 화면에 보이는 요소는 그대로 두고, 아래쪽 요소만 스크롤 시 등장시킵니다.

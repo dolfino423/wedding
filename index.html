@@ -105,17 +105,20 @@ h2{margin:0;font-weight:300;font-size:15px;letter-spacing:4px;text-indent:4px}
 .greeting{padding:84px var(--pad) 96px;text-align:center}
 .greeting-text{font-size:15px;line-height:2.1;letter-spacing:.2px}
 .greeting-text p{margin:0}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px}
+.intro-card{margin:0}
+.intro-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.intro-card figcaption{margin-top:10px;font-size:15px;font-weight:400;text-align:left;letter-spacing:.3px}
+.intro-card.right figcaption{text-align:right}
+.intro-card figcaption em{font-family:var(--en);font-style:italic;font-weight:400;font-size:14px;color:var(--text-soft);margin-right:4px}
+.people[data-shape="circle"] .intro-card img{border-radius:50%}
+.people[data-shape="circle"] .intro-card figcaption,.people[data-shape="circle"] .intro-card.right figcaption{text-align:center}
 .parents{margin-top:56px;font-size:16px;font-weight:400;line-height:2}
 .parents small{font-size:11px;font-weight:300;margin:0 2px}
 
 /* ---------- 3. date ---------- */
-.date{padding:72px var(--pad) 80px}
-.big-date{font-family:var(--en);font-weight:700;color:var(--date);line-height:1;padding:0 8px}
-.big-date .d1{font-size:clamp(46px,15vw,64px);white-space:nowrap}
-.big-date .d2{font-size:clamp(28px,9vw,38px);margin-top:8px;padding-left:2px}
-.couple{display:flex;justify-content:flex-end;gap:28px;margin-top:28px;padding:0 8px;font-size:14px;font-weight:400}
-.couple small{font-size:10px;font-weight:300;margin-right:6px}
-.calendar{margin:48px auto 0;max-width:320px;text-align:center}
+.date{padding:64px var(--pad) 72px}
+.calendar{margin:0 auto;max-width:320px;text-align:center}
 .calendar .month{font-family:var(--en);font-weight:700;font-size:13px;letter-spacing:3px;color:var(--brown);margin-bottom:14px}
 .calendar table{width:100%;border-collapse:collapse;font-size:13px}
 .calendar th{font-family:var(--en);font-weight:700;font-size:11px;color:var(--brown);padding:6px 0 10px;letter-spacing:1px}
@@ -243,6 +246,10 @@ details[open] summary svg{transform:rotate(180deg)}
       <p>저희 두 사람 결혼합니다.</p>
       <p>따뜻한 마음으로 저희의 시작을 축복해주세요.</p>
     </div>
+    <div class="people reveal" data-shape="circle">
+      <figure class="intro-card"><img src="assets/img/intro-groom.jpg" alt="신랑 송강석"><figcaption><em>Groom.</em> 강석</figcaption></figure>
+      <figure class="intro-card right"><img src="assets/img/intro-bride.jpg" alt="신부 이지은"><figcaption><em>Bride.</em> 지은</figcaption></figure>
+    </div>
     <div class="parents reveal">
       <div>송대현·신혜란 <small>의 장남</small> 강석</div>
       <div>이상두·김경숙 <small>의 차녀</small> 지은</div>
@@ -251,15 +258,6 @@ details[open] summary svg{transform:rotate(180deg)}
 
   <!-- 3. 날짜 -->
   <section class="date paper-light" aria-label="예식 일시">
-    <div class="big-date reveal">
-      <div class="d1">23 January</div>
-      <div class="d2">PM 6:40</div>
-    </div>
-    <div class="couple reveal">
-      <div><small>신랑</small>송강석</div>
-      <div><small>신부</small>이지은</div>
-    </div>
-
     <div class="calendar reveal">
       <div class="month">JANUARY 2027</div>
       <table>
